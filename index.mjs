@@ -382,5 +382,35 @@ const startIndex = async () => {
     })
 
 }
+// Root route handler
+app.get('/', function (req, res) {
+    res.send('Welcome to TradeNote!');
+});
+
+const startServer = async () => {
+    console.log("\nSTARTING NODEJS SERVER");
+    return new Promise(async (resolve, reject) => {
+        server = app.listen(port, '0.0.0.0', function () {
+            console.log(' -> TradeNote server started on http://0.0.0.0:' + port);
+        });
+        resolve(server);
+    });
+};
+
+const runServer = async () => {
+    console.log("\nRUNNING SERVER");
+    return new Promise(async (resolve, reject) => {
+        if (process.env.NODE_ENV !== 'dev') {
+            app.use(express.static('dist'));
+            app.get('*', function (req, res) {
+                res.sendFile(path.resolve('dist', 'index.html'));
+            });
+            console.log(" -> Running prod server");
+            resolve();
+        } else {
+            // Development server setup if needed
+        }
+    });
+};
 
 startIndex()
