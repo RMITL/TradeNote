@@ -44,8 +44,8 @@ const startIndex = async () => {
     const startServer = async () => {
         console.log("\nSTARTING NODEJS SERVER")
         return new Promise(async (resolve, reject) => {
-            server = app.listen(port, function () {
-                console.log(' -> TradeNote server started on http://localhost:' + port)
+            server = app.listen(port, '0.0.0.0', function () {
+                console.log(' -> TradeNote server started on http://0.0.0.0:' + port)
             });
             resolve(server)
         })
