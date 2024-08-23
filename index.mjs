@@ -10,16 +10,12 @@ import Proxy from 'http-proxy';
 import { useImportTrades, useGetExistingTradesArray, useUploadTrades } from './src/utils/addTrades.js';
 import { currentUser, uploadMfePrices, existingTradesArray, tradesData, existingImports } from './src/stores/globals.js';
 import { useGetTimeZone } from './src/utils/utils.js';
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
 
 const databaseURI = "mongodb+srv://info:WuEQuHxL4xZa62IE@cluster0.be4cj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
-const client = new MongoClient(databaseURI, {
-    serverApi: {
-        version: ServerApiVersion.v1,
-        strict: true,
-        deprecationErrors: true,
-    }
-});
+const client = MongoClient(uri, server_api=ServerApi('1'))
 
 const tradenoteDatabase = process.env.TRADENOTE_DATABASE;
 
