@@ -1,35 +1,37 @@
 import express from 'express';
-import { ParseServer } from 'parse-server'
-//var ParseDashboard = require('parse-dashboard');
-import ParseNode from 'parse/node.js'
-import path from 'path'
-import fs from 'fs'
-import axios from 'axios'
-import * as Vite from 'vite'
-import { MongoClient } from "mongodb"
-import Proxy from 'http-proxy'
+import { ParseServer } from 'parse-server';
+import ParseNode from 'parse/node.js';
+import path from 'path';
+import fs from 'fs';
+import axios from 'axios';
+import * as Vite from 'vite';
+import { MongoClient, ServerApiVersion } from "mongodb";
+import Proxy from 'http-proxy';
 import { useImportTrades, useGetExistingTradesArray, useUploadTrades } from './src/utils/addTrades.js';
 import { currentUser, uploadMfePrices, existingTradesArray, tradesData, existingImports } from './src/stores/globals.js';
 import { useGetTimeZone } from './src/utils/utils.js';
 
-let databaseURI
+const databaseURI = "mongodb+srv://info:WuEQuHxL4xZa62IE@cluster0.be4cj.mongodb.net/<YourDatabaseName>?retryWrites=true&w=majority&appName=Cluster0";
 
-if (process.env.MONGO_URI) {
-    databaseURI = process.env.MONGO_URI
-} else if (process.env.MONGO_ATLAS) {
-    databaseURI = "mongodb+srv://info:WuEQuHxL4xZa62IE@cluster0.mongodb.net/" + process.env.TRADENOTE_DATABASE + "?authSource=admin"
-} else {
-    databaseURI = "mongodb://info:WuEQuHxL4xZa62IE@cluster0.mongodb.net/" + process.env.TRADENOTE_DATABASE + "?authSource=admin"
+const client = new MongoClient(databaseURI, {
+    serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+    }
+});
+
+try {
+    await client.connect();
+    console.log("Connected to MongoDB Atlas!");
+} catch (error) {
+    console.error("Failed to connect to MongoDB Atlas:", error);
+    process.exit(1);
 }
 
-console.log("\nCONNECTING TO MONGODB")
-let hiddenDatabaseURI = databaseURI.replace(/:\/\/[^@]*@/, "://***@")
-console.log(' -> Database URI ' + hiddenDatabaseURI)
+const tradenoteDatabase = process.env.TRADENOTE_DATABASE;
 
-let tradenoteDatabase = process.env.TRADENOTE_DATABASE
-
-var app = express();
-
+const app = express();
 const port = process.env.TRADENOTE_PORT;
 const PROXY_PORT = 39482;
 
