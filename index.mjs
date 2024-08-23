@@ -11,7 +11,7 @@ import { useImportTrades, useGetExistingTradesArray, useUploadTrades } from './s
 import { currentUser, uploadMfePrices, existingTradesArray, tradesData, existingImports } from './src/stores/globals.js';
 import { useGetTimeZone } from './src/utils/utils.js';
 
-const databaseURI = "mongodb+srv://info:WuEQuHxL4xZa62IE@cluster0.be4cj.mongodb.net/<YourDatabaseName>?retryWrites=true&w=majority&appName=Cluster0";
+const databaseURI = "mongodb+srv://info:WuEQuHxL4xZa62IE@cluster0.be4cj.mongodb.net/Cluster0?retryWrites=true&w=majority&appName=Cluster0";
 
 const client = new MongoClient(databaseURI, {
     serverApi: {
@@ -20,14 +20,6 @@ const client = new MongoClient(databaseURI, {
         deprecationErrors: true,
     }
 });
-
-try {
-    await client.connect();
-    console.log("Connected to MongoDB Atlas!");
-} catch (error) {
-    console.error("Failed to connect to MongoDB Atlas:", error);
-    process.exit(1);
-}
 
 const tradenoteDatabase = process.env.TRADENOTE_DATABASE;
 
