@@ -12,19 +12,18 @@ import { useImportTrades, useGetExistingTradesArray, useUploadTrades } from './s
 import { currentUser, uploadMfePrices, existingTradesArray, tradesData, existingImports } from './src/stores/globals.js';
 import { useGetTimeZone } from './src/utils/utils.js';
 
-let databaseURI
+let databaseURI;
 
 if (process.env.MONGO_URI) {
-    databaseURI = process.env.MONGO_URI
-} else if (process.env.MONGO_ATLAS) {
-    databaseURI = "mongodb+srv://info:WuEQuHxL4xZa62IE@cluster0.be4cj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    databaseURI = process.env.MONGO_URI;
 } else {
-    databaseURI = "mongodb+srv://info:WuEQuHxL4xZa62IE@cluster0.be4cj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    databaseURI = "mongodb+srv://info:WuEQuHxL4xZa62IE@cluster0.be4cj.mongodb.net/tradenote?retryWrites=true&w=majority";
 }
 
-console.log("\nCONNECTING TO MONGODB")
-let hiddenDatabaseURI = databaseURI.replace(/:\/\/[^@]*@/, "://***@")
-console.log(' -> Database URI ' + hiddenDatabaseURI)
+console.log("\nCONNECTING TO MONGODB");
+let hiddenDatabaseURI = databaseURI.replace(/:\/\/[^@]*@/, "://***@");
+console.log(' -> Database URI ' + hiddenDatabaseURI);
+
 
 let tradenoteDatabase = process.env.TRADENOTE_DATABASE
 
