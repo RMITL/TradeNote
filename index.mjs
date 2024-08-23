@@ -13,7 +13,7 @@ import { useGetTimeZone } from './src/utils/utils.js';
 
 const databaseURI = "mongodb+srv://info:WuEQuHxL4xZa62IE@cluster0.be4cj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
-const client = MongoClient(uri, server_api=ServerApi('1'))
+const client = MongoClient(databaseURI, server_api=ServerApi('1'))
 
 const tradenoteDatabase = process.env.TRADENOTE_DATABASE;
 
