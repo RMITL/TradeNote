@@ -17,9 +17,9 @@ let databaseURI
 if (process.env.MONGO_URI) {
     databaseURI = process.env.MONGO_URI
 } else if (process.env.MONGO_ATLAS) {
-    databaseURI = "mongodb+srv://" + process.env.MONGO_USER + ":" + process.env.MONGO_PASSWORD + "@" + process.env.MONGO_URL + "/" + process.env.TRADENOTE_DATABASE + "?authSource=admin"
+    databaseURI = "mongodb+srv://info:WuEQuHxL4xZa62IE@cluster0.be4cj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 } else {
-    databaseURI = "mongodb://" + process.env.MONGO_USER + ":" + process.env.MONGO_PASSWORD + "@" + process.env.MONGO_URL + ":" + process.env.MONGO_PORT + "/" + process.env.TRADENOTE_DATABASE + "?authSource=admin"
+    databaseURI = "mongodb+srv://info:WuEQuHxL4xZa62IE@cluster0.be4cj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 }
 
 console.log("\nCONNECTING TO MONGODB")
