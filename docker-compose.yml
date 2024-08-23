@@ -1,35 +1,28 @@
-name: tradenote
+version: '3.1'
 services:
   tradenote:
     image: eleventrading/tradenote
     container_name: tradenote_app
     ports:
-      - 8080:8080
+      - "8080:8080"
     environment:
-      MONGO_URI: mongodb://tradenote:tradenote@mongo:27017/tradenote?authSource=admin
-      TRADENOTE_DATABASE: tradenote
+      MONGO_URI: mongodb://tradenote:tradenote@tradenote_db:27017/tradenote?authSource=admin
       APP_ID: 123456
       MASTER_KEY: 123456
       TRADENOTE_PORT: 8080
     networks:
       - tradenote_net
+
   mongo:
     image: mongo:latest
     container_name: tradenote_db
-    volumes:
-      - tradenote_db:/data/db
-    ports:
-      - 27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: tradenote
       MONGO_INITDB_ROOT_PASSWORD: tradenote
       MONGO_INITDB_DATABASE: tradenote
     networks:
       - tradenote_net
+
 networks:
   tradenote_net:
     driver: bridge
-
-volumes:
-  tradenote_db:
-    name: tradenote_db
