@@ -12,18 +12,19 @@ import { useImportTrades, useGetExistingTradesArray, useUploadTrades } from './s
 import { currentUser, uploadMfePrices, existingTradesArray, tradesData, existingImports } from './src/stores/globals.js';
 import { useGetTimeZone } from './src/utils/utils.js';
 
-let databaseURI;
+let databaseURI
 
 if (process.env.MONGO_URI) {
-    databaseURI = process.env.MONGO_URI;
+    databaseURI = process.env.MONGO_URI
+} else if (process.env.MONGO_ATLAS) {
+    databaseURI = "mongodb+srv://info:WuEQuHxL4xZa62IE@cluster0.mongodb.net/" + process.env.TRADENOTE_DATABASE + "?authSource=admin"
 } else {
-    databaseURI = "mongodb+srv://info:WuEQuHxL4xZa62IE@cluster0.be4cj.mongodb.net/tradenote?retryWrites=true&w=majority";
+    databaseURI = "mongodb://info:WuEQuHxL4xZa62IE@cluster0.mongodb.net/" + process.env.TRADENOTE_DATABASE + "?authSource=admin"
 }
 
-console.log("\nCONNECTING TO MONGODB");
-let hiddenDatabaseURI = databaseURI.replace(/:\/\/[^@]*@/, "://***@");
-console.log(' -> Database URI ' + hiddenDatabaseURI);
-
+console.log("\nCONNECTING TO MONGODB")
+let hiddenDatabaseURI = databaseURI.replace(/:\/\/[^@]*@/, "://***@")
+console.log(' -> Database URI ' + hiddenDatabaseURI)
 
 let tradenoteDatabase = process.env.TRADENOTE_DATABASE
 
@@ -43,8 +44,8 @@ const startIndex = async () => {
     const startServer = async () => {
         console.log("\nSTARTING NODEJS SERVER")
         return new Promise(async (resolve, reject) => {
-            server = app.listen(port, '0.0.0.0', function () {
-                console.log(' -> TradeNote server started on http://0.0.0.0:' + port)
+            server = app.listen(port, function () {
+                console.log(' -> TradeNote server started on http://localhost:' + port)
             });
             resolve(server)
         })
@@ -381,35 +382,5 @@ const startIndex = async () => {
     })
 
 }
-// Root route handler
-app.get('/', function (req, res) {
-    res.send('Welcome to TradeNote!');
-});
-
-const startServer = async () => {
-    console.log("\nSTARTING NODEJS SERVER");
-    return new Promise(async (resolve, reject) => {
-        server = app.listen(port, '0.0.0.0', function () {
-            console.log(' -> TradeNote server started on http://0.0.0.0:' + port);
-        });
-        resolve(server);
-    });
-};
-
-const runServer = async () => {
-    console.log("\nRUNNING SERVER");
-    return new Promise(async (resolve, reject) => {
-        if (process.env.NODE_ENV !== 'dev') {
-            app.use(express.static('dist'));
-            app.get('*', function (req, res) {
-                res.sendFile(path.resolve('dist', 'index.html'));
-            });
-            console.log(" -> Running prod server");
-            resolve();
-        } else {
-            // Development server setup if needed
-        }
-    });
-};
 
 startIndex()
